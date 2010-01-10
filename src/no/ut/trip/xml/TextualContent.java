@@ -1,5 +1,7 @@
 package no.ut.trip.xml;
 
+import no.ut.trip.xml.util.NodeListAdapter;
+
 import org.w3c.dom.Node;
 
 public class TextualContent {
@@ -13,7 +15,13 @@ public class TextualContent {
     }
 
     protected void setupNode(Node node) {
-        value = node.getNodeValue();
+        StringBuilder b = new StringBuilder();
+
+        for (Node child : new NodeListAdapter<Node>(node.getChildNodes())) {
+            b.append(child.getNodeValue());
+        }
+
+        value = b.toString();
     }
 
     public Node getNode() {
