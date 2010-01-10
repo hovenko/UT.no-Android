@@ -214,7 +214,9 @@ public class Listings extends Activity {
         final int GROUP_LOCATIONS = 1;
         final int GROUP_TRIPS = 2;
 
-        final List<Partial> partials;
+        final String[] ignore_partials = { "group", "page" };
+
+        final PartialList partials;
         final List<Resource> locations;
         final List<Resource> trips;
 
@@ -223,9 +225,30 @@ public class Listings extends Activity {
         public MyExpandableListAdapter(Listing listings) {
             this.listings = listings;
 
-            partials = listings.partials();
+            partials = setupPartials();
             locations = setupLocations();
             trips = setupTrips();
+        }
+
+        private PartialList setupPartials() {
+            PartialList filtered = new PartialList();
+            PartialList partialList = listings.partials();
+
+            for (Partial partial : partialList) {
+                boolean toAdd = true;
+
+                for (String ignore : ignore_partials) {
+                    if (ignore.equals(partial.getType())) {
+                        toAdd = false;
+                    }
+                }
+
+                if (toAdd) {
+                    filtered.add(partial);
+                }
+            }
+
+            return filtered;
         }
 
         private ArrayList<Resource> setupLocations() {
