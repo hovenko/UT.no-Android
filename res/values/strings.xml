@@ -5,5 +5,5 @@
     <string name="process_loading_data">Laster data, vennligst vent...</string>
     <string name="search_hint">Fritekstsøk</string>
     <string name="tab_locations">Områder</string>
-    <string name="trips">Turforslag</string>
+    <string name="btn_trips">Vis turforslag</string>
 </resources>

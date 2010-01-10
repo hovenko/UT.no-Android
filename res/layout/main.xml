@@ -7,6 +7,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:src="@drawable/utno" android:layout_margin="8px"></ImageView>
 
+<!-- 
     <LinearLayout android:id="@+id/layout_search_area"
         android:layout_height="wrap_content" android:orientation="horizontal"
         android:layout_width="fill_parent">
@@ -19,11 +20,11 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_weight="0" android:layout_gravity="center"></Button>
     </LinearLayout>
-
+ -->
 
     <LinearLayout android:id="@+id/layout_content"
         android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <Button android:text="@+id/trips" android:id="@+id/btn_trips"
+        <Button android:text="@string/btn_trips" android:id="@+id/btn_trips"
             android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
     </LinearLayout>
 
