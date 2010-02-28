@@ -104,7 +104,7 @@ public class Listings extends Activity {
                 HttpGet get = new HttpGet(uri);
                 HttpResponse response = client.execute(get, localContext);
                 InputStream is = response.getEntity().getContent();
-                listings = new Listing(is);
+                Listings.this.listings = new Listing(is);
             } catch (Exception e) {
                 Log.e(TAG, "Failed to get trip listings", e);
                 new ExceptionHandler(Listings.this,
@@ -142,16 +142,7 @@ public class Listings extends Activity {
     private void setupListings(final Listing listings) {
         Log.v(TAG, "setupListings()");
 
-        FacetGroup locations = listings.facets().facetByType("location");
-        if (locations != null) {
-            ResourceList resources = locations.resources();
-            setupResourcesList(resources);
-        }
-
         setupListingsExpandable(listings);
-
-        // PartialList partials = listings.partials();
-        // setupPartialsList(partials);
     }
 
     private void setupListingsExpandable(final Listing listings) {
@@ -161,50 +152,6 @@ public class Listings extends Activity {
 
         list.setAdapter(adapter);
         list.setTextFilterEnabled(true);
-
-        // OnItemClickListener handler = new
-        // OnResourceItemClickListener(resources);
-        // list.setOnItemClickListener(handler);
-    }
-
-    private void setupPartialsList(final PartialList partials) {
-        // ListView list = (ListView) findViewById(R.id.list_partials);
-        //
-        // ArrayList<String> lstStrings = new ArrayList<String>();
-        //
-        // for (Partial partial : partials) {
-        // lstStrings.add(partial.getValue());
-        // }
-        //
-        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(list
-        // .getContext(), android.R.layout.simple_list_item_1, lstStrings);
-        //
-        // list.setAdapter(adapter);
-        // list.setTextFilterEnabled(true);
-        //
-        // OnItemClickListener handler = new OnPartialClickListener(partials);
-        // list.setOnItemClickListener(handler);
-    }
-
-    private void setupResourcesList(final ResourceList resources) {
-        // ExpandableListView list = (ExpandableListView)
-        // findViewById(R.id.list_facet);
-        //
-        // ArrayList<String> lstStrings = new ArrayList<String>();
-        //
-        // for (Resource resource : resources) {
-        // lstStrings.add(resource.getValue());
-        // }
-        //
-        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(list
-        // .getContext(), android.R.layout.simple_list_item_1, lstStrings);
-        //
-        // list.setAdapter(adapter);
-        // list.setTextFilterEnabled(true);
-        //
-        // OnItemClickListener handler = new
-        // OnResourceItemClickListener(resources);
-        // list.setOnItemClickListener(handler);
     }
 
     final class MyExpandableListAdapter extends BaseExpandableListAdapter {
@@ -268,7 +215,7 @@ public class Listings extends Activity {
 
         private ArrayList<Resource> setupTrips() {
             ArrayList<Resource> list = new ArrayList<Resource>();
-            for (ResultItem item : listings.result().itemsByType("trip")) {
+            for (ResultItem item : listings.result()) {
                 list.add(item.resource());
             }
             return list;
@@ -320,19 +267,6 @@ public class Listings extends Activity {
             return groupPosition;
         }
 
-        // public Button getGenericView() {
-        // // Layout parameters for the ExpandableListView
-        // AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-        // ViewGroup.LayoutParams.FILL_PARENT, 64);
-        //
-        // Button button = new Button(Listings.this);
-        // button.setLayoutParams(lp);
-        // button.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        // button.setPadding(36, 0, 0, 0);
-        //
-        // return button;
-        // }
-
         public TextView getGenericTextView() {
             // Layout parameters for the ExpandableListView
             AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
@@ -340,8 +274,10 @@ public class Listings extends Activity {
 
             TextView textView = new TextView(Listings.this);
             textView.setLayoutParams(lp);
+
             // Center the text vertically
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+
             // Set the text starting position
             textView.setPadding(36, 0, 0, 0);
             return textView;
