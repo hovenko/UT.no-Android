@@ -25,15 +25,16 @@ public final class R {
         public static final int search_text=0x7f050002;
     }
     public static final class layout {
-        public static final int listings=0x7f030000;
-        public static final int main=0x7f030001;
+        public static final int entry_subjects=0x7f030000;
+        public static final int listings=0x7f030001;
+        public static final int main=0x7f030002;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int btn_trips=0x7f040005;
-        public static final int hello=0x7f040000;
-        public static final int process_loading_data=0x7f040002;
-        public static final int search_hint=0x7f040003;
-        public static final int tab_locations=0x7f040004;
+        public static final int app_name=0x7f040000;
+        public static final int btn_trips=0x7f040004;
+        public static final int process_loading_data=0x7f040001;
+        public static final int search_hint=0x7f040002;
+        public static final int tab_locations=0x7f040003;
+        public static final int tagline=0x7f040005;
     }
 }
