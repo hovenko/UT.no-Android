@@ -4,29 +4,28 @@ import no.ut.trip.xml.util.NodeListAdapter;
 
 import org.w3c.dom.Node;
 
-public class ResourceGroup<T extends Resource> {
-    protected final Node node;
+public class ResourceGroup {
     protected final ResourceList resources = new ResourceList();
 
     public ResourceGroup(Node node) {
-        this.node = node;
-        setupNode(node);
+	setupNode(node);
     }
 
     protected void setupNode(Node node) {
-        setupResources(node);
+	setupResources(node);
     }
 
     protected void setupResources(Node node) {
-        for (Node child : new NodeListAdapter<Node>(node.getChildNodes())) {
-            if (child.getNodeName().equals("resource")) {
-                Resource res = new Resource(child);
-                resources.add(res);
-            }
-        }
+	for (Node child : new NodeListAdapter<Node>(node.getChildNodes())) {
+	    if (child.getNodeName().equals("resource")) {
+		ResourceNode res = new ResourceNode(child);
+		resources.add(res);
+	    }
+	}
     }
 
     public ResourceList resources() {
-        return resources;
+	return resources;
     }
+
 }

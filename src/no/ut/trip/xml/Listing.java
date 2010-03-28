@@ -21,76 +21,75 @@ public class Listing {
     protected Element node;
 
     public Listing(InputStream is) {
-        Document doc = null;
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            doc = db.parse(is);
-            this.doc = doc;
-            this.node = doc.getDocumentElement();
-            return;
-        } catch (IOException ioe) {
-            System.err.println("Invalid XML format!!");
-            throw new RuntimeException("Failed to create listings", ioe);
-        } catch (ParserConfigurationException pce) {
-            System.err.println("Could not parse XML!");
-            throw new RuntimeException("Failed to create listings", pce);
-        } catch (SAXException se) {
-            System.err.println("Could not parse XML!");
-            throw new RuntimeException("Failed to create listings", se);
-        }
+	Document doc = null;
+	try {
+	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder db = dbf.newDocumentBuilder();
+	    doc = db.parse(is);
+	    this.doc = doc;
+	    this.node = doc.getDocumentElement();
+	} catch (IOException ioe) {
+	    System.err.println("Invalid XML format!!");
+	    throw new RuntimeException("Failed to create listings", ioe);
+	} catch (ParserConfigurationException pce) {
+	    System.err.println("Could not parse XML!");
+	    throw new RuntimeException("Failed to create listings", pce);
+	} catch (SAXException se) {
+	    System.err.println("Could not parse XML!");
+	    throw new RuntimeException("Failed to create listings", se);
+	}
     }
 
     public FacetList facets() {
-        FacetList facets = new FacetList();
+	FacetList facets = new FacetList();
 
-        NodeList nodes = node.getChildNodes();
-        for (Node node : new NodeListAdapter<Node>(nodes)) {
-            if (node.getNodeName().equals("facet")) {
-                FacetGroup facet = new FacetGroup(node);
-                facets.add(facet);
-            }
-        }
+	NodeList nodes = node.getChildNodes();
+	for (Node node : new NodeListAdapter<Node>(nodes)) {
+	    if (node.getNodeName().equals("facet")) {
+		FacetGroup facet = new FacetGroup(node);
+		facets.add(facet);
+	    }
+	}
 
-        return facets;
+	return facets;
     }
 
-    public ResultItemList result() {
-        ResultItemList list = new ResultItemList();
+    public Result result() {
+	Result list = new Result();
 
-        NodeList nodes = this.node.getChildNodes();
-        for (Node node : new NodeListAdapter<Node>(nodes)) {
-            if (node.getNodeName().equals("result")) {
-                for (Node subnode : new NodeListAdapter<Node>(node
-                        .getChildNodes())) {
-                    if (subnode.getNodeName().equals("item")) {
-                        ResultItem item = new ResultItem(subnode);
-                        list.add(item);
-                    }
-                }
-            }
-        }
+	NodeList nodes = this.node.getChildNodes();
+	for (Node node : new NodeListAdapter<Node>(nodes)) {
+	    if (node.getNodeName().equals("result")) {
+		for (Node subnode : new NodeListAdapter<Node>(node
+			.getChildNodes())) {
+		    if (subnode.getNodeName().equals("item")) {
+			ResultItem item = new ResultItem(subnode);
+			list.add(item);
+		    }
+		}
+	    }
+	}
 
-        return list;
+	return list;
     }
 
     public PartialList partials() {
-        PartialList partials = new PartialList();
+	PartialList partials = new PartialList();
 
-        NodeList nodes = this.node.getChildNodes();
-        for (Node node : new NodeListAdapter<Node>(nodes)) {
-            if (node.getNodeName().equals("partials")) {
-                for (Node subnode : new NodeListAdapter<Node>(node
-                        .getChildNodes())) {
-                    if (subnode.getNodeName().equals("resource")) {
-                        Partial partial = new Partial(subnode);
-                        partials.add(partial);
-                    }
-                }
-            }
-        }
+	NodeList nodes = this.node.getChildNodes();
+	for (Node node : new NodeListAdapter<Node>(nodes)) {
+	    if (node.getNodeName().equals("partials")) {
+		for (Node subnode : new NodeListAdapter<Node>(node
+			.getChildNodes())) {
+		    if (subnode.getNodeName().equals("resource")) {
+			Partial partial = new Partial(subnode);
+			partials.add(partial);
+		    }
+		}
+	    }
+	}
 
-        return partials;
+	return partials;
     }
 
 }

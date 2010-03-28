@@ -1,0 +1,9 @@
+Overview
+
+List the subjects that can be chosen.
+
+Support translation of english types to Norwegian labels, such as
+"cottage" to "Hytter" and "trip" to "Forslag til turer".
+
+URI: urn:x-ut:overview
+Mime type: application/xml

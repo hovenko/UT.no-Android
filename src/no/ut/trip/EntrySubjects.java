@@ -1,7 +1,7 @@
 package no.ut.trip;
 
 import no.ut.trip.error.ExceptionHandler;
-import no.ut.trip.widget.listing.ListingListAdapter;
+import no.ut.trip.widget.listing.SubjectsListAdapter;
 import no.ut.trip.ws.ListingsClient;
 import no.ut.trip.xml.Listing;
 import android.app.Activity;
@@ -13,14 +13,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
+import android.widget.ListView;
 
-public class Listings extends Activity {
+public class EntrySubjects extends Activity {
 
     static final int DIALOG_PROGRESS = 0;
 
-    static final String TAG = "Listings";
+    static final String TAG = "EntrySubjects";
 
     ProgressDialog progressDialog = null;
 
@@ -29,7 +28,7 @@ public class Listings extends Activity {
     protected Dialog onCreateDialog(int id) {
 	switch (id) {
 	case DIALOG_PROGRESS:
-	    progressDialog = new ProgressDialog(Listings.this);
+	    progressDialog = new ProgressDialog(EntrySubjects.this);
 	    progressDialog.setMessage(getText(R.string.process_loading_data));
 	    progressDialog.setIndeterminate(true);
 	    return progressDialog;
@@ -71,12 +70,11 @@ public class Listings extends Activity {
 	    try {
 		String strUri = intentUri.toString();
 		Listing listing = ListingsClient.retrieve(strUri);
-		Listings.this.setListing(listing);
+		EntrySubjects.this.setListing(listing);
 	    } catch (Exception e) {
-		Log.e(TAG, "Failed to get trip listings", e);
-		new ExceptionHandler(Listings.this,
-			"Failed to get trip listings", e).setRethrow(true)
-			.show();
+		Log.e(TAG, "Failed to get listings", e);
+		new ExceptionHandler(EntrySubjects.this,
+			"Failed to get listings", e).setRethrow(true).show();
 		return;
 	    }
 
@@ -95,7 +93,7 @@ public class Listings extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.listings);
+	setContentView(R.layout.entry_subjects);
 
 	showDialog(DIALOG_PROGRESS);
 
@@ -109,50 +107,16 @@ public class Listings extends Activity {
     private void setupListings(final Listing listings) {
 	Log.v(TAG, "setupListings()");
 
-	setupListingsExpandable(listings);
+	setupListingSubjects(listings);
     }
 
-    private void setupListingsExpandable(final Listing listings) {
-	ExpandableListView list = (ExpandableListView) findViewById(R.id.list_facet);
+    private void setupListingSubjects(final Listing listings) {
+	ListView list = (ListView) findViewById(R.id.list_facet);
 
-	ExpandableListAdapter adapter = new ListingListAdapter(this, listings);
+	SubjectsListAdapter adapter = new SubjectsListAdapter(this, listings);
 
 	list.setAdapter(adapter);
 	list.setTextFilterEnabled(true);
     }
-
-    // final class OnResourceItemClickListener implements OnItemClickListener {
-    // private final ResourceList resources;
-    //
-    // public OnResourceItemClickListener(final ResourceList resources) {
-    // this.resources = resources;
-    // }
-    //
-    // public void onItemClick(AdapterView<? extends Adapter> parent, View v,
-    // int position, long id) {
-    // Resource res = resources.get(position);
-    // Intent intent = new Intent(Intent.ACTION_SEARCH);
-    // Uri uri = Uri.parse(res.getURL().toString());
-    // intent.setDataAndType(uri, "application/xml");
-    // startActivity(intent);
-    // }
-    // }
-
-    // final class OnPartialClickListener implements OnItemClickListener {
-    // private final PartialList partials;
-    //
-    // public OnPartialClickListener(final PartialList partials) {
-    // this.partials = partials;
-    // }
-    //
-    // public void onItemClick(AdapterView<? extends Adapter> parent, View v,
-    // int position, long id) {
-    // Partial partial = partials.get(position);
-    // Intent intent = new Intent(Intent.ACTION_SEARCH);
-    // Uri uri = Uri.parse(partial.getURL().toString());
-    // intent.setDataAndType(uri, "application/xml");
-    // startActivity(intent);
-    // }
-    // }
 
 }

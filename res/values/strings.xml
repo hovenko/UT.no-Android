@@ -6,4 +6,9 @@
     <string name="tab_locations">Områder</string>
     <string name="btn_trips">Vis turforslag</string>
     <string name="tagline">Hele norges turplanlegger</string>
+    <string name="q_looking_for">Hva leter du etter?</string>
+    <string name="subject_cottage">Hytter</string>
+    <string name="subject_trip">Forslag til turer</string>
+    <string name="subject_trail">Løyper og stier</string>
+    <string name="subject_activity">Arrangerte turer</string>
 </resources>

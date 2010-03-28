@@ -9,8 +9,8 @@ import no.ut.trip.xml.FacetList;
 import no.ut.trip.xml.Listing;
 import no.ut.trip.xml.Partial;
 import no.ut.trip.xml.PartialList;
-import no.ut.trip.xml.Resource;
-import no.ut.trip.xml.ResultItem;
+import no.ut.trip.xml.ResourceNode;
+import no.ut.trip.xml.Result;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,27 +20,27 @@ import android.widget.TextView;
 
 public class ListingListAdapter extends BaseExpandableListAdapter {
     final Listing listings;
-    final Listings adapter;
+    final Listings activity;
 
     final int GROUP_PARTIALS = 0;
     final int GROUP_LOCATIONS = 1;
-    final int GROUP_TRIPS = 2;
+    final int GROUP_RESULT = 2;
 
     final String[] ignore_partials = { "group", "page" };
 
     final PartialList partials;
-    final List<Resource> locations;
-    final List<Resource> trips;
+    final List<ResourceNode> locations;
+    final Result result;
 
     final String[] labels = { "Fjern fra søk", "Områder", "Turforslag" };
 
-    public ListingListAdapter(final Listings adapter, final Listing listing) {
+    public ListingListAdapter(final Listings activity, final Listing listing) {
 	this.listings = listing;
-	this.adapter = adapter;
+	this.activity = activity;
 
 	partials = setupPartials();
 	locations = setupLocations();
-	trips = setupTrips();
+	result = setupResult();
     }
 
     private PartialList setupPartials() {
@@ -64,30 +64,26 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 	return filtered;
     }
 
-    private ArrayList<Resource> setupLocations() {
-	ArrayList<Resource> locations = new ArrayList<Resource>();
+    private ArrayList<ResourceNode> setupLocations() {
+	ArrayList<ResourceNode> locations = new ArrayList<ResourceNode>();
 	FacetList facetList = listings.facets();
 	FacetGroup locationFacet = facetList.facetByType("location");
 	if (locationFacet == null) {
 	    return locations;
 	}
 
-	for (Resource res : locationFacet.resources()) {
+	for (ResourceNode res : locationFacet.resources()) {
 	    locations.add(res);
 	}
 
 	return locations;
     }
 
-    private ArrayList<Resource> setupTrips() {
-	ArrayList<Resource> list = new ArrayList<Resource>();
-	for (ResultItem item : listings.result()) {
-	    list.add(item.resource());
-	}
-	return list;
+    private Result setupResult() {
+	return listings.result();
     }
 
-    public List<? extends Resource> getGroupList(int pos) {
+    public List<? extends Object> getGroupList(int pos) {
 	switch (pos) {
 	case GROUP_PARTIALS:
 	    return partials;
@@ -95,15 +91,15 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 	case GROUP_LOCATIONS:
 	    return locations;
 
-	case GROUP_TRIPS:
-	    return trips;
+	case GROUP_RESULT:
+	    return result;
 	}
 
 	return null;
     }
 
     public Object getChild(int groupPosition, int childPosition) {
-	List<? extends Resource> list = getGroupList(groupPosition);
+	List<? extends Object> list = getGroupList(groupPosition);
 
 	if (list != null) {
 	    return list.get(childPosition);
@@ -117,7 +113,7 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     }
 
     public int getChildrenCount(int groupPosition) {
-	List<? extends Resource> list = getGroupList(groupPosition);
+	List<? extends Object> list = getGroupList(groupPosition);
 	return list.size();
     }
 
@@ -138,7 +134,7 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 	AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
 		ViewGroup.LayoutParams.FILL_PARENT, 64);
 
-	TextView textView = new TextView(adapter);
+	TextView textView = new TextView(activity);
 	textView.setLayoutParams(lp);
 
 	// Center the text vertically
@@ -152,14 +148,14 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
 	    boolean isLastChild, View convertView, ViewGroup parent) {
 	TextView textView = getGenericTextView();
-	Resource res = (Resource) getChild(groupPosition, childPosition);
+	ResourceNode res = (ResourceNode) getChild(groupPosition, childPosition);
 	textView.setText(res.getValue());
 
-	if (groupPosition == GROUP_TRIPS) {
-	    textView.setOnClickListener(new OnResultItemClickListener(adapter,
+	if (groupPosition == GROUP_RESULT) {
+	    textView.setOnClickListener(new OnResultItemClickListener(activity,
 		    res));
 	} else {
-	    textView.setOnClickListener(new OnResourceClickListener(adapter,
+	    textView.setOnClickListener(new OnResourceClickListener(activity,
 		    res));
 	}
 	return textView;

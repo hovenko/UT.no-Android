@@ -1,9 +1,9 @@
 package no.ut.trip.xml;
 
-public class ResultItemList extends AbstractList<ResultItem> {
+public class Result extends AbstractList<ResultItem> {
 
-    public ResultItemList itemsByType(String type) {
-        ResultItemList sub = new ResultItemList();
+    public Result itemsByType(String type) {
+        Result sub = new Result();
 
         if (null == type) {
             throw new NullPointerException("Requires a string: type");

@@ -1,56 +1,16 @@
 package no.ut.trip.xml;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-public class Resource implements Typed {
-    protected Node node;
+public interface Resource extends Typed {
 
-    protected String value;
-    protected String type;
-    protected URL url;
-    protected String label;
+    public Node getNode();
 
-    public Resource(Node node) {
-        this.node = node;
-        setupNode(node);
-    }
+    public String getValue();
 
-    protected void setupNode(Node node) {
-        NamedNodeMap attrs = node.getAttributes();
+    public String getLabel();
 
-        String strUrl = attrs.getNamedItem("url").getNodeValue();
-        type = attrs.getNamedItem("type").getNodeValue();
-        value = attrs.getNamedItem("value").getNodeValue();
-        label = node.getNodeValue();
-
-        try {
-            url = new URL(strUrl);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Bad URL of facet resource", e);
-        }
-    }
-
-    public Node getNode() {
-        return node;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public URL getURL() {
-        return url;
-    }
+    public URL getURL();
 }

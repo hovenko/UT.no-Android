@@ -1,18 +1,18 @@
 package no.ut.trip.widget.listing;
 
 import no.ut.trip.Listings;
-import no.ut.trip.xml.Resource;
+import no.ut.trip.xml.ResourceNode;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 public class OnResultItemClickListener implements OnClickListener {
-    private final Resource resource;
+    private final ResourceNode resource;
     private final Listings listings;
 
     public OnResultItemClickListener(final Listings listings,
-	    final Resource resource) {
+	    final ResourceNode resource) {
 	this.resource = resource;
 	this.listings = listings;
     }
