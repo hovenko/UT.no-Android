@@ -1,22 +1,20 @@
 package no.ut.trip.xml;
 
-import org.w3c.dom.Node;
+import no.nrk.listings.result.Subject;
 
 public class FacetGroup extends ResourceGroup implements Typed {
 
-    protected String type;
+    public Subject type;
 
-    public FacetGroup(Node node) {
-	super(node);
+    public FacetGroup() {
+
     }
 
-    @Override
-    protected void setupNode(Node node) {
-	super.setupNode(node);
-	type = node.getAttributes().getNamedItem("type").getNodeValue();
+    public FacetGroup(ResourceGroup group) {
+	super(group);
     }
 
-    public String getType() {
+    public Subject getType() {
 	return type;
     }
 

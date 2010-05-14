@@ -1,11 +1,10 @@
 package no.ut.trip.xml;
 
-import org.w3c.dom.Node;
 
-public class ResultItemResource extends ResourceNode {
+public class ResultItemResource extends ResourceImpl {
 
-    public ResultItemResource(Node node) {
-        super(node);
+    public ResultItemResource(ResourceImpl res) {
+	super(res);
     }
 
 }

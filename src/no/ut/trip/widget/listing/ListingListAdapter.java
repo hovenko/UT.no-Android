@@ -1,16 +1,16 @@
 package no.ut.trip.widget.listing;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import no.nrk.listings.facet.FacetField;
+import no.nrk.listings.result.Subject;
 import no.ut.trip.Listings;
 import no.ut.trip.xml.FacetGroup;
-import no.ut.trip.xml.FacetList;
 import no.ut.trip.xml.Listing;
-import no.ut.trip.xml.Partial;
 import no.ut.trip.xml.PartialList;
-import no.ut.trip.xml.ResourceNode;
-import no.ut.trip.xml.Result;
+import no.ut.trip.xml.Resource;
+import no.ut.trip.xml.ResourceList;
+import no.ut.trip.xml.ResultList;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +26,12 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     final int GROUP_LOCATIONS = 1;
     final int GROUP_RESULT = 2;
 
-    final String[] ignore_partials = { "group", "page" };
+    static final Subject[] IGNORE_PARTIALS = { new Subject("group"),
+	    new Subject("page") };
 
     final PartialList partials;
-    final List<ResourceNode> locations;
-    final Result result;
+    final ResourceList locations;
+    final ResultList result;
 
     final String[] labels = { "Fjern fra søk", "Områder", "Turforslag" };
 
@@ -44,42 +45,18 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     }
 
     private PartialList setupPartials() {
-	PartialList filtered = new PartialList();
 	PartialList partialList = listings.partials();
-
-	for (Partial partial : partialList) {
-	    boolean toAdd = true;
-
-	    for (String ignore : ignore_partials) {
-		if (ignore.equals(partial.getType())) {
-		    toAdd = false;
-		}
-	    }
-
-	    if (toAdd) {
-		filtered.add(partial);
-	    }
-	}
-
-	return filtered;
+	return partialList.filterIgnores(IGNORE_PARTIALS);
     }
 
-    private ArrayList<ResourceNode> setupLocations() {
-	ArrayList<ResourceNode> locations = new ArrayList<ResourceNode>();
-	FacetList facetList = listings.facets();
-	FacetGroup locationFacet = facetList.facetByType("location");
-	if (locationFacet == null) {
-	    return locations;
-	}
+    private ResourceList setupLocations() {
+	FacetGroup locationFacet = listings.facetsByType(new FacetField(
+		"location"));
 
-	for (ResourceNode res : locationFacet.resources()) {
-	    locations.add(res);
-	}
-
-	return locations;
+	return locationFacet.resources();
     }
 
-    private Result setupResult() {
+    private ResultList setupResult() {
 	return listings.result();
     }
 
@@ -148,7 +125,7 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
 	    boolean isLastChild, View convertView, ViewGroup parent) {
 	TextView textView = getGenericTextView();
-	ResourceNode res = (ResourceNode) getChild(groupPosition, childPosition);
+	Resource res = (Resource) getChild(groupPosition, childPosition);
 	textView.setText(res.getValue());
 
 	if (groupPosition == GROUP_RESULT) {

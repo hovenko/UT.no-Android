@@ -1,14 +1,14 @@
 package no.ut.trip.widget.listing;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import no.nrk.listings.facet.FacetField;
 import no.ut.trip.EntrySubjects;
 import no.ut.trip.R;
 import no.ut.trip.xml.FacetGroup;
-import no.ut.trip.xml.FacetList;
 import no.ut.trip.xml.Listing;
 import no.ut.trip.xml.Resource;
+import no.ut.trip.xml.ResourceList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.Gravity;
@@ -26,7 +26,7 @@ public class SubjectsListAdapter extends BaseAdapter {
     final Listing listings;
     final EntrySubjects activity;
 
-    final List<Resource> subjects;
+    final ResourceList subjects;
 
     public SubjectsListAdapter(final EntrySubjects activity,
 	    final Listing listing) {
@@ -39,19 +39,11 @@ public class SubjectsListAdapter extends BaseAdapter {
 	subjects = setupSubjects();
     }
 
-    protected ArrayList<Resource> setupSubjects() {
-	ArrayList<Resource> subjects = new ArrayList<Resource>();
-	FacetList facetList = listings.facets();
-	FacetGroup subjectsFacet = facetList.facetByType("subject");
-	if (subjectsFacet == null) {
-	    return subjects;
-	}
+    protected ResourceList setupSubjects() {
+	FacetGroup subjectsFacet = listings.facetsByType(new FacetField(
+		"subject"));
 
-	for (Resource res : subjectsFacet.resources()) {
-	    subjects.add(res);
-	}
-
-	return subjects;
+	return subjectsFacet.resources();
     }
 
     public List<? extends Resource> getList() {

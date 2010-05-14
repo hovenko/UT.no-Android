@@ -1,18 +1,20 @@
 package no.ut.trip.xml;
 
-public class FacetList extends AbstractList<FacetGroup> {
+import no.nrk.listings.facet.FacetField;
 
-    public FacetGroup facetByType(String type) {
-        if (null == type) {
-            throw new NullPointerException("Requires a string: type");
-        }
+public class FacetList extends AbstractTypedList<FacetGroup> {
 
-        for (FacetGroup facet : list) {
-            if (type.equals(facet.getType())) {
-                return facet;
-            }
-        }
+    public FacetGroup facetByType(FacetField type) {
+	if (null == type) {
+	    throw new NullPointerException("Requires a string: type");
+	}
 
-        return null;
+	for (FacetGroup facet : list) {
+	    if (type.equals(facet.getType())) {
+		return facet;
+	    }
+	}
+
+	return null;
     }
 }

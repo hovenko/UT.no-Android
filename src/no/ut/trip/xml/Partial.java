@@ -1,11 +1,10 @@
 package no.ut.trip.xml;
 
-import org.w3c.dom.Node;
 
-public class Partial extends ResourceNode {
+public class Partial extends ResourceImpl {
 
-    public Partial(Node node) {
-        super(node);
+    public Partial(ResourceImpl res) {
+	super(res);
     }
 
 }

@@ -1,41 +1,21 @@
 package no.ut.trip.xml;
 
-import no.ut.trip.xml.util.NodeListAdapter;
-
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+import no.nrk.listings.result.Subject;
 
 public class ResultItem extends ResourceGroup implements Typed {
 
-    protected String subject;
-    protected TextualContent content;
+    public Subject subject;
+    public TextualContent content;
 
-    public ResultItem(Node node) {
-	super(node);
+    public ResultItem() {
+
     }
 
-    protected void setupNode(Node node) {
-	super.setupNode(node);
-
-	NamedNodeMap attrs = node.getAttributes();
-
-	subject = attrs.getNamedItem("subject").getNodeValue();
-
-	for (Node child : new NodeListAdapter<Node>(node.getChildNodes())) {
-	    String nodename = child.getNodeName();
-	    if ("content".equals(nodename)) {
-		content = new TextualContent(child);
-	    }
-	}
+    public ResultItem(ResourceGroup group) {
+	super(group);
     }
 
-    // public ResultItemResource resource() {
-    // Resource old = resources().get(0);
-    // ResultItemResource resource = new ResultItemResource(old.getNode());
-    // return resource;
-    // }
-
-    public String getType() {
+    public Subject getType() {
 	return subject;
     }
 

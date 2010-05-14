@@ -1,11 +1,10 @@
 package no.ut.trip.xml;
 
-import org.w3c.dom.Node;
 
-public class Facet extends ResourceNode {
+public class Facet extends ResourceImpl {
 
-    public Facet(Node node) {
-        super(node);
+    public Facet(ResourceImpl res) {
+	super(res);
     }
 
 }

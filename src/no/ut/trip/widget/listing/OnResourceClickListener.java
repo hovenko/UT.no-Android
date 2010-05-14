@@ -1,6 +1,6 @@
 package no.ut.trip.widget.listing;
 
-import no.ut.trip.xml.ResourceNode;
+import no.ut.trip.xml.Resource;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public class OnResourceClickListener implements OnClickListener {
-    private final ResourceNode resource;
+    private final Resource resource;
     private final Activity activity;
 
     public OnResourceClickListener(final Activity activity,
-	    final ResourceNode resource) {
+	    final Resource resource) {
 	this.resource = resource;
 	this.activity = activity;
     }
