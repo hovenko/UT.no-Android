@@ -1,9 +1,13 @@
 package no.ut.trip;
 
+import java.io.InputStream;
+
+import no.nrk.listings.ListingDocument;
+import no.nrk.listings.facet.FacetSet;
+import no.nrk.listings.query.DefaultQueryField;
 import no.ut.trip.error.ExceptionHandler;
 import no.ut.trip.widget.listing.SubjectsListAdapter;
-import no.ut.trip.ws.ListingsClient;
-import no.ut.trip.xml.Listing;
+import no.ut.trip.xml.ListingXmlDocument;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -23,7 +27,7 @@ public class EntrySubjects extends Activity {
 
     ProgressDialog progressDialog = null;
 
-    Listing listing = null;
+    ListingDocument listing = null;
 
     protected Dialog onCreateDialog(int id) {
 	switch (id) {
@@ -38,7 +42,7 @@ public class EntrySubjects extends Activity {
 	}
     }
 
-    protected synchronized void setListing(Listing listing) {
+    protected synchronized void setListing(ListingDocument listing) {
 	this.listing = listing;
     }
 
@@ -68,13 +72,14 @@ public class EntrySubjects extends Activity {
 
 	public void run() {
 	    try {
-		String strUri = intentUri.toString();
-		Listing listing = ListingsClient.retrieve(strUri);
+		InputStream is = getResources().openRawResource(R.raw.subjects);
+
+		ListingDocument listing = new ListingXmlDocument(is);
 		EntrySubjects.this.setListing(listing);
 	    } catch (Exception e) {
-		Log.e(TAG, "Failed to get listings", e);
+		Log.e(TAG, "Failed to get subjects", e);
 		new ExceptionHandler(EntrySubjects.this,
-			"Failed to get listings", e).setRethrow(true).show();
+			"Failed to get subjects", e).setRethrow(true).show();
 		return;
 	    }
 
@@ -104,16 +109,18 @@ public class EntrySubjects extends Activity {
 	progressThread.start();
     }
 
-    private void setupListings(final Listing listings) {
+    private void setupListings(final ListingDocument listings) {
 	Log.v(TAG, "setupListings()");
 
 	setupListingSubjects(listings);
     }
 
-    private void setupListingSubjects(final Listing listings) {
+    private void setupListingSubjects(final ListingDocument listings) {
 	ListView list = (ListView) findViewById(R.id.list_facet);
 
-	SubjectsListAdapter adapter = new SubjectsListAdapter(this, listings);
+	FacetSet subjects = listings.getFacets().facetsByType(
+		new DefaultQueryField("subject"));
+	SubjectsListAdapter adapter = new SubjectsListAdapter(this, subjects);
 
 	list.setAdapter(adapter);
 	list.setTextFilterEnabled(true);

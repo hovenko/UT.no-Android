@@ -3,8 +3,9 @@ package no.ut.trip.xml.util;
 import java.util.Iterator;
 
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
-public class NodeMapAdapter<T extends org.w3c.dom.Node> implements Iterable<T> {
+public class NodeMapAdapter<T extends Node> implements Iterable<T> {
     protected NamedNodeMap list;
     protected int index = 0;
 

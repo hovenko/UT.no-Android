@@ -1,6 +1,6 @@
 package no.ut.trip.widget.listing;
 
-import no.ut.trip.xml.Resource;
+import no.nrk.listings.Resource;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;

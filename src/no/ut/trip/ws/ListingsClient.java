@@ -3,7 +3,8 @@ package no.ut.trip.ws;
 import java.io.InputStream;
 import java.net.URI;
 
-import no.ut.trip.xml.Listing;
+import no.nrk.listings.ListingDocument;
+import no.ut.trip.xml.ListingXmlDocument;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,7 +18,7 @@ import android.util.Log;
 public class ListingsClient {
     static final String TAG = "ListingsClient";
 
-    public static Listing retrieve(String strUri) throws Exception {
+    public static ListingDocument retrieve(String strUri) throws Exception {
 	Log.d(TAG, "Retrieving URL: " + strUri);
 
 	URI uri = new URI(strUri);
@@ -26,6 +27,8 @@ public class ListingsClient {
 	HttpGet get = new HttpGet(uri);
 	HttpResponse response = client.execute(get, localContext);
 	InputStream is = response.getEntity().getContent();
-	return new Listing(is);
+	ListingDocument document = new ListingXmlDocument(is);
+
+	return document;
     }
 }

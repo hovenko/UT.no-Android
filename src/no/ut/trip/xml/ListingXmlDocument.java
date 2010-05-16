@@ -2,12 +2,21 @@ package no.ut.trip.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import no.nrk.listings.facet.FacetField;
+import no.nrk.listings.ListingDocument;
+import no.nrk.listings.Search;
+import no.nrk.listings.facet.FacetResource;
+import no.nrk.listings.facet.FacetSet;
+import no.nrk.listings.facet.PartialResource;
+import no.nrk.listings.partial.PartialList;
+import no.nrk.listings.result.Item;
+import no.nrk.listings.result.ResultList;
 import no.ut.trip.xml.util.NodeListAdapter;
 
 import org.w3c.dom.Document;
@@ -16,12 +25,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class ListingXmlRepository {
+public class ListingXmlDocument implements ListingDocument {
 
     protected Document doc;
     protected Element node;
 
-    public ListingXmlRepository(InputStream is) {
+    public ListingXmlDocument(InputStream is) {
 	Document doc = null;
 	try {
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -41,63 +50,55 @@ public class ListingXmlRepository {
 	}
     }
 
-    public FacetList getFacets() {
-	FacetList facets = new FacetList();
+    public FacetSet getFacets() {
+	FacetSet facets = new FacetSet();
 
 	NodeList nodes = node.getChildNodes();
 	for (Node node : new NodeListAdapter<Node>(nodes)) {
 	    if (node.getNodeName().equals("facet")) {
-		FacetGroup facet = FacetGroupXmlFactory.createFacetGroup(node);
-		facets.add(facet);
+		Set<FacetResource> list = FacetListXmlFactory
+			.createFacetList(node);
+		facets.addAll(list);
 	    }
 	}
 
 	return facets;
     }
 
-    public FacetGroup getFacetsByType(FacetField type) {
-	return getFacets().facetByType(type);
-    }
-
-    public ResultList getResult() {
-	ResultList list = new ResultList();
+    public ResultList getResults() {
+	ResultList all = new ResultList();
 
 	NodeList nodes = this.node.getChildNodes();
 	for (Node node : new NodeListAdapter<Node>(nodes)) {
 	    if (node.getNodeName().equals("result")) {
-		for (Node subnode : new NodeListAdapter<Node>(node
-			.getChildNodes())) {
-		    if (subnode.getNodeName().equals("item")) {
-			ResultItem item = ResultItemXmlFactory
-				.createResultItem(subnode);
-			list.add(item);
-		    }
-		}
+		List<Item> list = ResultListXmlFactory.createResultList(node);
+		all.addAll(list);
 	    }
 	}
 
-	return list;
+	return all;
     }
 
     public PartialList getPartials() {
-	PartialList partials = new PartialList();
+	PartialList all = new PartialList();
 
-	NodeList nodes = this.node.getChildNodes();
+	NodeList nodes = node.getChildNodes();
 	for (Node node : new NodeListAdapter<Node>(nodes)) {
 	    if (node.getNodeName().equals("partials")) {
-		for (Node subnode : new NodeListAdapter<Node>(node
-			.getChildNodes())) {
-		    if (subnode.getNodeName().equals("resource")) {
-			ResourceImpl res = ResourceNodeXmlFactory
-				.createResourceNode(subnode);
-			Partial partial = new Partial(res);
-			partials.add(partial);
-		    }
+		FacetSet list = FacetListXmlFactory.createFacetList(node);
+		for (FacetResource item : list) {
+		    PartialResource partial = new PartialResource(item);
+		    all.add(partial);
 		}
 	    }
 	}
 
-	return partials;
+	return all;
     }
 
+    public Search getSearch() {
+	Search search = SearchXmlFactory.createSearch(node);
+
+	return search;
+    }
 }

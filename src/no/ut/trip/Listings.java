@@ -1,9 +1,9 @@
 package no.ut.trip;
 
+import no.nrk.listings.ListingDocument;
 import no.ut.trip.error.ExceptionHandler;
 import no.ut.trip.widget.listing.ListingListAdapter;
 import no.ut.trip.ws.ListingsClient;
-import no.ut.trip.xml.Listing;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -24,7 +24,7 @@ public class Listings extends Activity {
 
     ProgressDialog progressDialog = null;
 
-    Listing listing = null;
+    ListingDocument listing = null;
 
     protected Dialog onCreateDialog(int id) {
 	switch (id) {
@@ -39,7 +39,7 @@ public class Listings extends Activity {
 	}
     }
 
-    protected synchronized void setListing(Listing listing) {
+    protected synchronized void setListing(ListingDocument listing) {
 	this.listing = listing;
     }
 
@@ -70,7 +70,7 @@ public class Listings extends Activity {
 	public void run() {
 	    try {
 		String strUri = intentUri.toString();
-		Listing listing = ListingsClient.retrieve(strUri);
+		ListingDocument listing = ListingsClient.retrieve(strUri);
 		Listings.this.setListing(listing);
 	    } catch (Exception e) {
 		Log.e(TAG, "Failed to get trip listings", e);
@@ -106,13 +106,13 @@ public class Listings extends Activity {
 	progressThread.start();
     }
 
-    private void setupListings(final Listing listings) {
+    private void setupListings(final ListingDocument listings) {
 	Log.v(TAG, "setupListings()");
 
 	setupListingsExpandable(listings);
     }
 
-    private void setupListingsExpandable(final Listing listings) {
+    private void setupListingsExpandable(final ListingDocument listings) {
 	ExpandableListView list = (ExpandableListView) findViewById(R.id.list_facet);
 
 	ExpandableListAdapter adapter = new ListingListAdapter(this, listings);
@@ -120,39 +120,5 @@ public class Listings extends Activity {
 	list.setAdapter(adapter);
 	list.setTextFilterEnabled(true);
     }
-
-    // final class OnResourceItemClickListener implements OnItemClickListener {
-    // private final ResourceList resources;
-    //
-    // public OnResourceItemClickListener(final ResourceList resources) {
-    // this.resources = resources;
-    // }
-    //
-    // public void onItemClick(AdapterView<? extends Adapter> parent, View v,
-    // int position, long id) {
-    // Resource res = resources.get(position);
-    // Intent intent = new Intent(Intent.ACTION_SEARCH);
-    // Uri uri = Uri.parse(res.getURL().toString());
-    // intent.setDataAndType(uri, "application/xml");
-    // startActivity(intent);
-    // }
-    // }
-
-    // final class OnPartialClickListener implements OnItemClickListener {
-    // private final PartialList partials;
-    //
-    // public OnPartialClickListener(final PartialList partials) {
-    // this.partials = partials;
-    // }
-    //
-    // public void onItemClick(AdapterView<? extends Adapter> parent, View v,
-    // int position, long id) {
-    // Partial partial = partials.get(position);
-    // Intent intent = new Intent(Intent.ACTION_SEARCH);
-    // Uri uri = Uri.parse(partial.getURL().toString());
-    // intent.setDataAndType(uri, "application/xml");
-    // startActivity(intent);
-    // }
-    // }
 
 }

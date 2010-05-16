@@ -1,16 +1,19 @@
 package no.ut.trip.widget.listing;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import no.nrk.listings.facet.FacetField;
+import no.nrk.listings.ListingDocument;
+import no.nrk.listings.Resource;
+import no.nrk.listings.facet.FacetResource;
+import no.nrk.listings.facet.PartialResource;
+import no.nrk.listings.partial.PartialList;
+import no.nrk.listings.query.DefaultQueryField;
+import no.nrk.listings.result.Item;
+import no.nrk.listings.result.ResultList;
 import no.nrk.listings.result.Subject;
 import no.ut.trip.Listings;
-import no.ut.trip.xml.FacetGroup;
-import no.ut.trip.xml.Listing;
-import no.ut.trip.xml.PartialList;
-import no.ut.trip.xml.Resource;
-import no.ut.trip.xml.ResourceList;
-import no.ut.trip.xml.ResultList;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 public class ListingListAdapter extends BaseExpandableListAdapter {
-    final Listing listings;
+    final ListingDocument listings;
     final Listings activity;
 
     final int GROUP_PARTIALS = 0;
@@ -29,13 +32,14 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     static final Subject[] IGNORE_PARTIALS = { new Subject("group"),
 	    new Subject("page") };
 
-    final PartialList partials;
-    final ResourceList locations;
-    final ResultList result;
+    final List<PartialResource> partials;
+    final List<FacetResource> locations;
+    final List<Item> result;
 
-    final String[] labels = { "Fjern fra søk", "Områder", "Turforslag" };
+    final String[] labels = { "Fjern fra søk", "Områder", "Søketreff" };
 
-    public ListingListAdapter(final Listings activity, final Listing listing) {
+    public ListingListAdapter(final Listings activity,
+	    final ListingDocument listing) {
 	this.listings = listing;
 	this.activity = activity;
 
@@ -44,20 +48,30 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 	result = setupResult();
     }
 
-    private PartialList setupPartials() {
-	PartialList partialList = listings.partials();
-	return partialList.filterIgnores(IGNORE_PARTIALS);
+    private List<PartialResource> setupPartials() {
+	PartialList partialList = listings.getPartials();
+	PartialList filtered = partialList.filterIgnores(IGNORE_PARTIALS);
+
+	List<PartialResource> list = new ArrayList<PartialResource>();
+	list.addAll(filtered);
+	return list;
     }
 
-    private ResourceList setupLocations() {
-	FacetGroup locationFacet = listings.facetsByType(new FacetField(
-		"location"));
+    private List<FacetResource> setupLocations() {
+	Set<FacetResource> facets = listings.getFacets().facetsByType(
+		new DefaultQueryField("location"));
 
-	return locationFacet.resources();
+	List<FacetResource> list = new ArrayList<FacetResource>();
+	list.addAll(facets);
+	return list;
     }
 
-    private ResultList setupResult() {
-	return listings.result();
+    private List<Item> setupResult() {
+	ResultList result = listings.getResults();
+
+	List<Item> list = new ArrayList<Item>();
+	list.addAll(result);
+	return list;
     }
 
     public List<? extends Object> getGroupList(int pos) {
@@ -125,15 +139,24 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
 	    boolean isLastChild, View convertView, ViewGroup parent) {
 	TextView textView = getGenericTextView();
-	Resource res = (Resource) getChild(groupPosition, childPosition);
-	textView.setText(res.getValue());
+	Object child = getChild(groupPosition, childPosition);
+
+	if (child instanceof Resource) {
+	    Resource res = (Resource) child;
+	    textView.setText("" + res.getLabel());
+	} else if (child instanceof Item) {
+	    Item item = (Item) child;
+	    textView.setText("" + item.getHtmlResource().getLabel());
+	} else {
+	    throw new RuntimeException("Unknown child: " + child.getClass());
+	}
 
 	if (groupPosition == GROUP_RESULT) {
 	    textView.setOnClickListener(new OnResultItemClickListener(activity,
-		    res));
+		    (Item) child));
 	} else {
 	    textView.setOnClickListener(new OnResourceClickListener(activity,
-		    res));
+		    (Resource) child));
 	}
 	return textView;
     }

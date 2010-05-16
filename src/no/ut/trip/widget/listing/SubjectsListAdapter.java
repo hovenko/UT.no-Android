@@ -1,14 +1,15 @@
 package no.ut.trip.widget.listing;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import no.nrk.listings.facet.FacetField;
+import no.nrk.listings.QueryResource;
+import no.nrk.listings.facet.FacetResource;
+import no.nrk.listings.facet.FacetSet;
+import no.nrk.listings.query.DefaultQueryToken;
+import no.nrk.listings.query.QueryToken;
 import no.ut.trip.EntrySubjects;
 import no.ut.trip.R;
-import no.ut.trip.xml.FacetGroup;
-import no.ut.trip.xml.Listing;
-import no.ut.trip.xml.Resource;
-import no.ut.trip.xml.ResourceList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.Gravity;
@@ -23,34 +24,26 @@ import android.widget.TextView;
 public class SubjectsListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
 
-    final Listing listings;
     final EntrySubjects activity;
 
-    final ResourceList subjects;
+    final FacetSet subjects;
 
     public SubjectsListAdapter(final EntrySubjects activity,
-	    final Listing listing) {
+	    final FacetSet subjects) {
 	// Cache the LayoutInflate to avoid asking for a new one each time.
 	mInflater = LayoutInflater.from(activity);
 
-	this.listings = listing;
 	this.activity = activity;
-
-	subjects = setupSubjects();
+	this.subjects = subjects;
     }
 
-    protected ResourceList setupSubjects() {
-	FacetGroup subjectsFacet = listings.facetsByType(new FacetField(
-		"subject"));
-
-	return subjectsFacet.resources();
+    public List<FacetResource> getList() {
+	List<FacetResource> list = new ArrayList<FacetResource>();
+	list.addAll(subjects);
+	return list;
     }
 
-    public List<? extends Resource> getList() {
-	return subjects;
-    }
-
-    public TextView getGenericTextView() {
+    public TextView createGenericTextView() {
 	// Layout parameters for the ExpandableListView
 	AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
 		ViewGroup.LayoutParams.FILL_PARENT, 64);
@@ -82,11 +75,11 @@ public class SubjectsListAdapter extends BaseAdapter {
 	return position;
     }
 
-    protected Bitmap getBitmapByResource(Resource res) {
-	String value = res.getValue();
+    protected Bitmap getBitmapByResource(QueryResource res) {
+	QueryToken subject = res.getToken();
 	int id = R.drawable.subject_default;
 
-	if ("cottage".equals(value)) {
+	if (new DefaultQueryToken("cottage").equals(subject)) {
 	    id = R.drawable.subject_cottage;
 	}
 
@@ -111,9 +104,20 @@ public class SubjectsListAdapter extends BaseAdapter {
 	    holder = (ViewHolder) convertView.getTag();
 	}
 
-	Resource res = (Resource) getItem(position);
-	holder.text.setText(res.getValue());
+	Object obj = getItem(position);
+	QueryResource res;
+
+	if (obj instanceof QueryResource) {
+	    res = (QueryResource) obj;
+	} else {
+	    throw new RuntimeException("Unknown child: " + obj.getClass());
+	}
+
+	holder.text.setText("" + res.getLabel());
 	holder.icon.setImageBitmap(getBitmapByResource(res));
+
+	convertView.setOnClickListener(new OnResourceClickListener(activity,
+		res));
 
 	return convertView;
     }

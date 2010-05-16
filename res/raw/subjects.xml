@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<listings xmlns="http://dev.api.ut.no/listings">
+  <facet type="subject">
+    <!--<resource url="http://ut.no/solrsearch/ws/search_facet?&amp;subject.0=trail" value="trail" found="2754" type="subject">Ruter</resource>-->
+    <resource url="http://ut.no/solrsearch/ws/search_facet?&amp;subject.0=cottage" value="cottage" found="996" type="subject">Hytter</resource>
+    <resource url="http://ut.no/solrsearch/ws/search_facet?&amp;subject.0=activity" value="activity" found="889" type="subject">Arrangementer</resource>
+    <!--<resource url="http://ut.no/solrsearch/ws/search_facet?&amp;subject.0=article" value="article" found="289" type="subject">Artikler</resource>-->
+    <resource url="http://ut.no/solrsearch/ws/search_facet?&amp;subject.0=trip" value="trip" found="284" type="subject">Turforslag</resource>
+    <!--<resource url="http://ut.no/solrsearch/ws/search_facet?&amp;subject.0=video" value="video" found="220" type="subject">Videoer</resource>-->
+    <resource url="http://ut.no/solrsearch/ws/search_facet?&amp;subject.0=poi" value="poi" found="155" type="subject">Turmål</resource>
+  </facet>
+</listings>
