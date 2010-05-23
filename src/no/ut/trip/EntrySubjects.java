@@ -11,8 +11,6 @@ import no.ut.trip.xml.ListingXmlDocument;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -63,11 +61,9 @@ public class EntrySubjects extends Activity {
      */
     private class ProgressThread extends Thread {
 	Handler mHandler;
-	final Uri intentUri;
 
-	ProgressThread(Handler h, Uri intentUri) {
+	ProgressThread(Handler h) {
 	    mHandler = h;
-	    this.intentUri = intentUri;
 	}
 
 	public void run() {
@@ -102,10 +98,7 @@ public class EntrySubjects extends Activity {
 
 	showDialog(DIALOG_PROGRESS);
 
-	Intent intent = getIntent();
-	Uri intentUri = intent.getData();
-
-	ProgressThread progressThread = new ProgressThread(handler, intentUri);
+	ProgressThread progressThread = new ProgressThread(handler);
 	progressThread.start();
     }
 

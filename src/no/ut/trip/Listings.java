@@ -3,6 +3,7 @@ package no.ut.trip;
 import no.nrk.listings.ListingDocument;
 import no.ut.trip.error.ExceptionHandler;
 import no.ut.trip.widget.listing.ListingListAdapter;
+import no.ut.trip.widget.listing.ResultListAdapter;
 import no.ut.trip.ws.ListingsClient;
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,6 +16,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 public class Listings extends Activity {
 
@@ -110,12 +112,21 @@ public class Listings extends Activity {
 	Log.v(TAG, "setupListings()");
 
 	setupListingsExpandable(listings);
+	setupListingsResult(listings);
     }
 
     private void setupListingsExpandable(final ListingDocument listings) {
 	ExpandableListView list = (ExpandableListView) findViewById(R.id.list_facet);
 
 	ExpandableListAdapter adapter = new ListingListAdapter(this, listings);
+
+	list.setAdapter(adapter);
+	list.setTextFilterEnabled(true);
+    }
+
+    private void setupListingsResult(final ListingDocument listings) {
+	ListView list = (ListView) findViewById(R.id.list_result);
+	ResultListAdapter adapter = new ResultListAdapter(this, listings);
 
 	list.setAdapter(adapter);
 	list.setTextFilterEnabled(true);

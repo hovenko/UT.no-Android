@@ -11,7 +11,6 @@ import no.nrk.listings.facet.PartialResource;
 import no.nrk.listings.partial.PartialList;
 import no.nrk.listings.query.DefaultQueryField;
 import no.nrk.listings.result.Item;
-import no.nrk.listings.result.ResultList;
 import no.nrk.listings.result.Subject;
 import no.ut.trip.Listings;
 import android.view.Gravity;
@@ -27,16 +26,14 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 
     final int GROUP_PARTIALS = 0;
     final int GROUP_LOCATIONS = 1;
-    final int GROUP_RESULT = 2;
 
     static final Subject[] IGNORE_PARTIALS = { new Subject("group"),
 	    new Subject("page") };
 
     final List<PartialResource> partials;
     final List<FacetResource> locations;
-    final List<Item> result;
 
-    final String[] labels = { "Fjern fra søk", "Områder", "Søketreff" };
+    final String[] labels = { "Fjern fra søk", "Områder" };
 
     public ListingListAdapter(final Listings activity,
 	    final ListingDocument listing) {
@@ -45,7 +42,6 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 
 	partials = setupPartials();
 	locations = setupLocations();
-	result = setupResult();
     }
 
     private List<PartialResource> setupPartials() {
@@ -66,14 +62,6 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 	return list;
     }
 
-    private List<Item> setupResult() {
-	ResultList result = listings.getResults();
-
-	List<Item> list = new ArrayList<Item>();
-	list.addAll(result);
-	return list;
-    }
-
     public List<? extends Object> getGroupList(int pos) {
 	switch (pos) {
 	case GROUP_PARTIALS:
@@ -81,9 +69,6 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 
 	case GROUP_LOCATIONS:
 	    return locations;
-
-	case GROUP_RESULT:
-	    return result;
 	}
 
 	return null;
@@ -113,7 +98,7 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
     }
 
     public int getGroupCount() {
-	return 3;
+	return 2;
     }
 
     public long getGroupId(int groupPosition) {
@@ -151,13 +136,9 @@ public class ListingListAdapter extends BaseExpandableListAdapter {
 	    throw new RuntimeException("Unknown child: " + child.getClass());
 	}
 
-	if (groupPosition == GROUP_RESULT) {
-	    textView.setOnClickListener(new OnResultItemClickListener(activity,
-		    (Item) child));
-	} else {
-	    textView.setOnClickListener(new OnResourceClickListener(activity,
-		    (Resource) child));
-	}
+	textView.setOnClickListener(new OnResourceClickListener(activity,
+		(Resource) child));
+
 	return textView;
     }
 

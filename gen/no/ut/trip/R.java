@@ -17,19 +17,20 @@ public final class R {
         public static final int utno=0x7f020003;
     }
     public static final class id {
-        public static final int btn_overview=0x7f06000c;
-        public static final int btn_trips=0x7f06000b;
-        public static final int icon=0x7f060004;
-        public static final int image_utno=0x7f060006;
-        public static final int layout_content=0x7f06000a;
-        public static final int layout_facet=0x7f060002;
-        public static final int layout_header=0x7f060000;
+        public static final int btn_overview=0x7f06000d;
+        public static final int btn_trips=0x7f06000c;
+        public static final int icon=0x7f060005;
+        public static final int image_utno=0x7f060000;
+        public static final int layout_content=0x7f06000b;
+        public static final int layout_facet=0x7f060003;
+        public static final int layout_header=0x7f060001;
         public static final int layout_search_area=0x7f060007;
-        public static final int list_facet=0x7f060003;
+        public static final int list_facet=0x7f060004;
+        public static final int list_result=0x7f06000a;
         public static final int search_btn=0x7f060009;
         public static final int search_text=0x7f060008;
-        public static final int text=0x7f060005;
-        public static final int txt_q_looking_for=0x7f060001;
+        public static final int text=0x7f060006;
+        public static final int txt_q_looking_for=0x7f060002;
     }
     public static final class layout {
         public static final int entry_subjects=0x7f030000;

@@ -3,23 +3,25 @@
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <ImageView android:id="@+id/image_utno"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/utno" android:layout_margin="8px"></ImageView>
+
     <LinearLayout android:id="@+id/layout_header"
         android:layout_height="wrap_content" android:orientation="horizontal"
         android:layout_width="fill_parent">
 
         <TextView android:text="@string/q_looking_for"
-            android:id="@+id/txt_q_looking_for"
-            android:layout_width="wrap_content"
+            android:id="@+id/txt_q_looking_for" android:layout_width="wrap_content"
             android:layout_height="wrap_content"></TextView>
     </LinearLayout>
 
 
     <LinearLayout android:id="@+id/layout_facet"
         android:layout_width="fill_parent" android:layout_height="fill_parent">
-        
+
         <ListView android:id="@+id/list_facet"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_width="fill_parent" android:layout_height="wrap_content"></ListView>
     </LinearLayout>
 
 
