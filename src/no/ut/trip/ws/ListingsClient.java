@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.net.URI;
 
 import no.nrk.listings.ListingDocument;
-import no.ut.trip.xml.ListingXmlDocument;
+import no.nrk.listings.xml.ListingXmlDocument;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
