@@ -6,7 +6,7 @@ WARNING: The UT.no API is very unstable. The API WILL change. And so will this a
 # ABOUT
 
 In short, this application is just a proof of concept to download,
-navigate and view data from UT.no < http://ut.no/ >.
+navigate and view data from [UT.no](http://ut.no/UT.no - Hele Norges turplanlegger).
 
 
 # DEPENDENCIES
