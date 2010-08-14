@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">UT.no</string>
+    <string name="activity_pick_geo">Finn geo-posisjon</string>
     <string name="process_loading_data">Laster data, vennligst vent...</string>
     <string name="search_hint">Fritekstsøk</string>
     <string name="tab_locations">Områder</string>
@@ -11,4 +12,15 @@
     <string name="subject_trip">Forslag til turer</string>
     <string name="subject_trail">Løyper og stier</string>
     <string name="subject_activity">Arrangerte turer</string>
+    <string name="title_edit_poi">Redigér turmål</string>
+    <string name="title_create_poi">Opprett nytt turmål</string>
+    <string name="title_pois_list">Dine turmål</string>
+    <string name="menu_insert">Nytt turmål</string>
+    <string name="menu_delete">Slett</string>
+    <string name="menu_mylocation">Vis min posisjon</string>
+    <string name="menu_selected">Vis mitt valg</string>
+    <string name="menu_pin_here">Flytt hit</string>
+    <string name="menu_reset">Tilbakestill</string>
+    <string name="resolve_edit">Redigér turmål</string>
+    <string name="alert_reset_pin_q">Sikker at du vil tilbakestille posisjonen?</string>
 </resources>

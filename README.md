@@ -18,3 +18,4 @@ Depends on the Java library "no.nrk.listings". Stay tuned.
 
 Knut-Olav Hoven <knutolav@gmail.com>
 
+Some image resources are copyrighted by UT.no.

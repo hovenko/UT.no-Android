@@ -2,25 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    
-    <LinearLayout android:id="@+id/layout_search_area"
-        android:layout_height="wrap_content" android:orientation="horizontal"
+
+    <!--
+        <LinearLayout android:id="@+id/layout_search_area"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_width="fill_parent" android:visibility="gone">
 
-        <EditText android:text="Fritekstsøk" android:id="@+id/search_text"
-            android:layout_height="wrap_content" android:layout_width="fill_parent"
-            android:layout_weight="10" android:layout_gravity="center"
-            android:inputType="text"></EditText>
-        <Button android:text="Søk" android:id="@+id/search_btn"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_weight="0" android:layout_gravity="center"></Button>
-    </LinearLayout>
+        <EditText android:text="Fritekstsøk"
+        android:id="@+id/search_text"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" android:layout_weight="10"
+        android:layout_gravity="center"
+        android:inputType="text"></EditText> <Button android:text="Søk"
+        android:id="@+id/search_btn" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_weight="0"
+        android:layout_gravity="center"></Button> </LinearLayout>
+    -->
 
-    <LinearLayout android:id="@+id/layout_facet" android:orientation="vertical"
-        android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <LinearLayout android:id="@+id/layout_facet"
+        android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
         <ExpandableListView android:id="@+id/list_facet"
             android:layout_width="wrap_content" android:layout_height="wrap_content"></ExpandableListView>
         <ListView android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:id="@+id/list_result"></ListView>
+            android:layout_height="wrap_content" android:id="@+id/list_result"></ListView>
     </LinearLayout>
 </LinearLayout>

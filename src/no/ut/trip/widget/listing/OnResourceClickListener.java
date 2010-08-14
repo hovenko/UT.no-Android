@@ -20,7 +20,7 @@ public class OnResourceClickListener implements OnClickListener {
     public void onClick(View v) {
 	Intent intent = new Intent(Intent.ACTION_SEARCH);
 	Uri uri = Uri.parse(resource.getURL().toString());
-	intent.setDataAndType(uri, "application/xml");
+	intent.setDataAndType(uri, "vnd.android.cursor.dir/vnd.ut.listings");
 	activity.startActivity(intent);
     }
 }

@@ -1,34 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <ImageView android:id="@+id/image_utno"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/utno" android:layout_margin="8px"></ImageView>
+        <ImageView
+            android:id="@+id/image_utno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/utno"
+            android:layout_margin="8px"></ImageView>
 
-<!-- 
-    <LinearLayout android:id="@+id/layout_search_area"
-        android:layout_height="wrap_content" android:orientation="horizontal"
-        android:layout_width="fill_parent">
-
-        <EditText android:text="Fritekstsøk" android:id="@+id/search_text"
-            android:layout_height="wrap_content" android:layout_width="fill_parent"
+        <!--
+            <LinearLayout android:id="@+id/layout_search_area"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"> <EditText
+            android:text="Fritekstsøk" android:id="@+id/search_text"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_weight="10" android:layout_gravity="center"
-            android:inputType="text"></EditText>
-        <Button android:text="Søk" android:id="@+id/search_btn"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_weight="0" android:layout_gravity="center"></Button>
-    </LinearLayout>
- -->
+            android:inputType="text"></EditText> <Button
+            android:text="Søk" android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_gravity="center"></Button> </LinearLayout>
+        -->
 
-    <LinearLayout android:id="@+id/layout_content"
-        android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <Button android:text="@string/btn_trips" android:id="@+id/btn_trips"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-        <Button android:text="Oversikt" android:id="@+id/btn_overview"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-                
-    </LinearLayout>
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <Button
+                android:text="@string/btn_trips"
+                android:id="@+id/btn_trips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Button>
+            <Button
+                android:text="Oversikt"
+                android:id="@+id/btn_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Button>
+            <Button
+                android:text="Mine turmål"
+                android:id="@+id/btn_my_pois"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Button>
+            <Button
+                android:text="Kart"
+                android:id="@+id/btn_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Button>
+            <Button
+                android:text="Kart turmål"
+                android:id="@+id/btn_map_markers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Button>
+            <Button
+                android:text="Ta bilde"
+                android:id="@+id/btn_take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Button>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

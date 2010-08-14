@@ -57,7 +57,7 @@ public class EntrySubjects extends Activity {
     };
 
     /**
-     * Nested class that performs progress calculations (counting)
+     * Nested class that performs the retrieval of subjects.
      */
     private class ProgressThread extends Thread {
 	Handler mHandler;
