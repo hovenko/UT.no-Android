@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout android:id="@+id/layout_header"
+        android:layout_height="wrap_content" android:orientation="horizontal"
+        android:layout_width="fill_parent">
+        <ImageView android:id="@+id/icon"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:src="@drawable/subject_cottage"
+            android:layout_margin="8px"></ImageView>
+
+        <TextView android:text="Tittel på element"
+            android:textSize="24dip" android:id="@+id/title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/layout_facet"
+        android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <ExpandableListView android:id="@+id/list_facet"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"></ExpandableListView>
+        <ListView android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/list_result"></ListView>
+    </LinearLayout>
+</LinearLayout>

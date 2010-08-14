@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layout_header"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent">
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/custom_general"
+                android:layout_margin="8px"></ImageView>
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:id="@+id/txtName"
+                android:hint="Navn på turmål"
+                android:inputType="textShortMessage"
+                android:layout_width="fill_parent"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_geo"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+
+            <TextView
+                android:text="GPS-posisjon"
+                android:layout_alignParentTop="true"
+                android:id="@+id/labelGeo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:hint="Mangler geo-posisjon"
+                    android:id="@+id/txtGeoPosition"
+                    android:inputType="none"
+                    android:layout_weight="1.0"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"></EditText>
+
+                <Button
+                    android:text="Finn på kart"
+                    android:id="@+id/btnMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></Button>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_type"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <TextView
+                android:text="Type turmål"
+                android:layout_alignParentTop="true"
+                android:id="@+id/labelType"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TextView>
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_description"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <TextView
+                android:text="Beskrivelse"
+                android:layout_alignParentTop="true"
+                android:id="@+id/labelDescription"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TextView>
+            <EditText
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDescription"
+                android:hint="Hva gjør dette stedet til et bra turmål?"
+                android:layout_width="fill_parent"
+                android:gravity="top"
+                android:padding="5dip"
+                android:scrollbars="vertical"
+                android:fadingEdge="vertical"
+                android:lines="5"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_arrival"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <TextView
+                android:text="Hvordan finne frem"
+                android:layout_alignParentTop="true"
+                android:id="@+id/labelArrival"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TextView>
+            <EditText
+                android:layout_height="wrap_content"
+                android:id="@+id/txtArrival"
+                android:hint="Hvilke måter kan man komme seg dit på?"
+                android:layout_width="fill_parent"
+                android:gravity="top"
+                android:padding="5dip"
+                android:scrollbars="vertical"
+                android:fadingEdge="vertical"
+                android:lines="5"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_images"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_width="fill_parent">
+            <TextView
+                android:text="Bilder"
+                android:layout_alignParentTop="true"
+                android:id="@+id/labelArrival"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TextView>
+            <Button
+                android:text="Ta et bilde"
+                android:id="@+id/btnImageCapture"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></Button>
+            <ListView
+                android:id="@+id/list_images"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ListView>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
